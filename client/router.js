@@ -1,6 +1,7 @@
 import React from 'react';
-import { Router, Route, browserHistory } from 'react-router';
+import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import App from './containers/app';
+import Layout from './containers/layout'
 
 const Hello = React.createClass({
   render () {
@@ -19,9 +20,11 @@ const NoMatch = React.createClass({
 export default () => {
   return (
     <Router history={browserHistory}>
-      <Route path="/" component={App} />
-      <Route path='hello' component={Hello} />
-      <Route path="/*" component={NoMatch}/>
+      <Route path="/" component={Layout}>
+        <IndexRoute component={App} />
+        <Route path='hello' component={Hello} />
+        <Route path="*" component={NoMatch} />
+      </Route>
     </Router>
   );
 };

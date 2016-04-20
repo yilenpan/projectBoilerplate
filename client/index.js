@@ -1,5 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
 import App from './router';
+import Layout from './containers/layout'
 
-render(<App />, document.getElementById('root'));
+render((
+  <Layout>
+    <App/>
+  </Layout> ), document.getElementById('root'));
