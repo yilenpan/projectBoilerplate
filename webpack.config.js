@@ -4,10 +4,9 @@ var path = require('path');
 
 module.exports = {
   context: __dirname,
-  entry: ['./client/index', hotMiddlewareScript],
+  entry: ['./client/index.js', hotMiddlewareScript],
   output: {
-    path: __dirname,
-    publicPath: 'client/static/',
+    path: path.join(__dirname, '/client/static'),
     filename: 'bundle.js'
   },
   devtool: '#source-map',
@@ -21,9 +20,17 @@ module.exports = {
      {
        test: /\.js?/,
        exclude: [/node_modules/, /styles/],
-       loaders: ['babel'],
-       include: path.join(__dirname, 'src')
+       loader: 'babel',
+       include: [
+         path.join(__dirname, 'client/')
+       ],
+       query: {
+        presets: ['es2015', 'react']
+      }
      }
    ]
- }
+ },
+ resolve: {
+    extensions: ['', '.js']
+  }
 };

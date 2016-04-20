@@ -2,6 +2,7 @@ var path = require('path');
 
 module.exports = function (app, express) {
 
+  // Webpack hot reload
   if (process.env.NODE_ENV !== 'PRODUCTION') {
     var webpack = require('webpack');
     var webpackConfig = require('../../webpack.config');
@@ -16,10 +17,14 @@ module.exports = function (app, express) {
     }));
   }
 
+  // serve assets
   app.use('/bundle.js', express.static(path.join(__dirname, '../../client/static/bundle.js')));
   app.use('/styles', express.static(path.join(__dirname, '../../client/static/styles')));
 
-  app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, '../../index.html'));
-  });
+  // Setting up routes
+  var staticPages = express.Router();
+  app.use('/', staticPages);
+  require('../routes/staticPages')(staticPages);
+
+
 };
